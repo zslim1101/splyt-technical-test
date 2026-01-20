@@ -1,0 +1,26 @@
+{
+  "name": "splyt-technical-test",
+  "version": "1.0.0",
+  "description": "A small service that ingests location webhooks from Splyt and exposes a realtime subscription endpoint per driver.",
+  "main": "dist/server.js",
+  "repository": "git@github.com:zslim1101/splyt-technical-test.git",
+  "author": "Zac Lim <zslim1101@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts"
+  },
+  "dependencies": {
+    "@types/node": "^25.0.8",
+    "dayjs": "^1.11.19",
+    "fastify": "^5.7.1",
+    "ioredis": "^5.9.2",
+    "socket.io": "^4.8.3",
+    "typebox": "^1.0.77"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}
