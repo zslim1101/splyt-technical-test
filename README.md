@@ -109,6 +109,20 @@ socket.on("driver_location", (data) => {
 });
 ```
 
+**Location Update response body:**
+
+Individual location update events are sent as objects, containing the latitude, longitude, and timestamp.
+
+```json
+{
+  "latitude": 51.5074,
+  "longitude": -0.1278,
+  "timestamp": "2024-01-19T12:00:00Z"
+}
+```
+
+Note: Historical events are returned together as an array of the above objects, this is in favor of avoiding event flooding by “since” parameter values that are very far back in the past, tradeoff being client would need to know beforehand for proper handling
+
 ### Data Flow
 
 1. **Webhook Ingestion**: Splyt sends driver location updates to `POST /event`
@@ -118,7 +132,7 @@ socket.on("driver_location", (data) => {
 
 ### Redis Sorted Set Usage
 
-This solution uses Redis **Sorted Sets** (ZSET) to efficiently store and query time-series data. A sorted set is a collection of unique members, each associated with a numeric **score**. Members are automatically sorted ascendingly by score.
+This solution uses Redis **Sorted Sets** (ZSET) to efficiently store and query time-series data. A sorted set is a collection of unique members, each associated with a numeric **score**. Members are automatically sorted ascendingly by score. With that in mind, it is a perfect chance to use timestamps (in milliseconds) as the score, and the location data OR subscriber config data as the member.
 
 #### Why Sorted Sets?
 
